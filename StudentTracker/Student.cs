@@ -1,14 +1,17 @@
-﻿namespace StudentTracker
+﻿using System.Text.Json.Serialization;
+
+namespace StudentTracker
 {
     public class Student
     {
+        [JsonConstructor]
         public Student(string firstName,
                        string lastName,
                        Gender gender,
                        string course,
                        string className,
                        int age,
-                       int rollno,
+                       int rollNumber,
                        double marks)
         {
             FirstName = ValidateName(firstName);
@@ -17,7 +20,7 @@
             Course = course;
             ClassName = className;
             Age = age;
-            RollNumber = rollno;
+            RollNumber = rollNumber;
             Marks = marks;
         }
         private int _age;
@@ -51,10 +54,12 @@
 
         private string ValidateName(string name)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("name cannot be empty");
             foreach(char c in name)
             {
                 if (!(char.IsLetter(c) || char.IsWhiteSpace(c)))
-                    return "invalid name";
+                    throw new ArgumentException("invalid name input");
             }
             return name;
         }
