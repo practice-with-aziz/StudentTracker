@@ -60,6 +60,7 @@ namespace StudentTracker
 
                 File.WriteAllText(_filePath, json);
             }
+            
             catch (IOException ex)
             {
                 Log.Warning(ex, $"I/O error, disk is full/locked");
@@ -96,20 +97,9 @@ namespace StudentTracker
         {
             return _students.FirstOrDefault(s => s.RollNumber == rollno);
         }
-        public Student? UpdateCourse(int rollno,string course)
+        public void SaveChanges(Student changeStudent)
         {
-            var student = _students.FirstOrDefault(s => s.RollNumber == rollno);
-            if (student != null)
-            {
-                if (_courses.Contains(course))
-                {
-                    student.Course = course;
-                    SaveStudentsToFile();
-                    return student;
-                }
-                return null;
-            }
-            return null;
+            SaveStudentsToFile();
         }
         public bool DeleteStudent(int rollno)
         {
@@ -122,5 +112,6 @@ namespace StudentTracker
             }
             return false;
         }
+
     }
 }

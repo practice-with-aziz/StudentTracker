@@ -25,32 +25,32 @@ namespace StudentTracker
         }
         private int _age;
         private double _marks;
-        public string FirstName { get; init; } = string.Empty;
-        public string LastName { get; init; } = string.Empty;
-        public string ClassName { get; init; } = string.Empty;
-        public int RollNumber { get; init; }
-        public double Marks
-        {
-            get { return _marks; }
-            set
-            {
-                if (value < 0 || value > 100)
-                    throw new ArgumentOutOfRangeException("marks must be between 0 - 100");
-                _marks = value; 
-            }
-        }
+        public string FirstName { get; private set; } = string.Empty;
+        public string LastName { get; private set; } = string.Empty;
         public int Age
         {
             get { return _age; }
-            set
+            private set
             {
                 if (value < 5 || value > 30)
                     throw new ArgumentOutOfRangeException("age must be between 5 - 30");
                 _age = value;
             }
         }
-        public string Course { get; set; } = string.Empty;
-        public Gender Gender { get; set; } 
+        public double Marks
+        {
+            get { return _marks; }
+            private set
+            {
+                if (value < 0 || value > 100)
+                    throw new ArgumentOutOfRangeException("marks must be between 0 - 100");
+                _marks = value;
+            }
+        }
+        public int RollNumber { get; init; }
+        public string Course { get; private set; } = string.Empty;
+        public Gender Gender { get; private set; } 
+        public string ClassName { get; private set; } = string.Empty;
 
         private string ValidateName(string name)
         {
@@ -63,6 +63,14 @@ namespace StudentTracker
             }
             return name;
         }
+        internal void ChangeFirstName(string newName) => FirstName = ValidateName(newName);
+        internal void ChangeLastName(string newName) => LastName = ValidateName(newName);
+        internal void ChangeAge(int newAge) => Age = newAge;
+        internal void ChangeMarks(double newMarks) => Marks = newMarks;
+        internal void ChangeCourse(string newCourse) => Course = newCourse;
+        internal void ChangeGender(Gender newGender) => Gender = newGender;
+        internal void ChangeClassName(string newClassName) => ClassName = newClassName;
+        
     }
 
     public enum Gender
